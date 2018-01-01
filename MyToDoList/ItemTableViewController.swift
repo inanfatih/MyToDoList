@@ -15,7 +15,6 @@ class ItemTableViewController: UITableViewController {
   
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Setting up segment Items to show
         getSegmentItems()
         self.title = "To Do List"
     }
@@ -52,11 +51,8 @@ class ItemTableViewController: UITableViewController {
         
         //load item
         let item = segmentItems[(indexPath as NSIndexPath).row]
-        
-        //set item name
         cell.itemNameLabel.text = item.title
         
-        //on checkbox click
         cell.onClick = { cell in
             
             guard let indexPath = tableView.indexPath(for: cell) else { return }
@@ -79,6 +75,8 @@ class ItemTableViewController: UITableViewController {
         }
         return cell
     }
+    
+    
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let row = indexPath.row
@@ -111,13 +109,11 @@ class ItemTableViewController: UITableViewController {
             // Delete the row from the data source
             let row = indexPath.row
             
-            // TODO: will crash on deleting complete items, from the item view
             items.remove(at: row)
             getSegmentItems()
             
             tableView.reloadData()
         } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }
     }
     

@@ -15,7 +15,9 @@ class ItemTableViewCell: UITableViewCell {
     @IBOutlet weak var itemNameLabel: UILabel!
     @IBOutlet weak var toSwitch: UISwitch!
     @IBAction func doneSwitch(_ sender: UISwitch) {
-        onClick?(self)
+        
+               onClick?(self)
+
     }
     
     

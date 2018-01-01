@@ -38,7 +38,6 @@ class ItemDetailTableViewController: UITableViewController {
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
@@ -74,7 +73,6 @@ class ItemDetailTableViewController: UITableViewController {
         
         if saveButton === sender as? UIBarButtonItem {
             
-            print("let's' save")
             let name = itemNameTextField.text ?? ""
             let description = itemDescriptionTextField.text ?? ""
             

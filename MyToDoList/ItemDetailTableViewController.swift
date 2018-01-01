@@ -5,35 +5,23 @@
 //  Created by Fatih inan on 12/31/17.
 //  Copyright © 2017 Fatih inan. All rights reserved.
 //
-//
-//  ItemDetailTableViewController.swift
-//  ToDoList
-//
-//  Created by Loris Mazloum on 8/28/16.
-//  Copyright © 2016 Loris Mazloum. All rights reserved.
-//
 
 import UIKit
 
 class ItemDetailTableViewController: UITableViewController {
     
-    //MARK: Outlets
     @IBOutlet weak var itemNameTextField: UITextField!
     @IBOutlet weak var itemDescriptionTextField: UITextField!
     @IBOutlet weak var saveButton: UIBarButtonItem!
-    
-    // MARK: Actions
     @IBAction func cancelButtonPressed(_ sender: AnyObject) {
-        //if from modal, dismiss the page
+    
         if(presentingViewController != nil){
             dismiss(animated: true, completion: nil)
         }
         
-        //if from push, pop the view
         if let navigationController = navigationController {
             navigationController.popViewController(animated: true);
         }
-        
     }
     
     var item: Item!
@@ -46,17 +34,12 @@ class ItemDetailTableViewController: UITableViewController {
             itemNameTextField.text = item.title
             itemDescriptionTextField.text = item.description
         }
-        
-        
-        
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    // MARK: - Navigation
     
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         
@@ -70,11 +53,8 @@ class ItemDetailTableViewController: UITableViewController {
                 
             } else {
                 return true
-                
             }
-            
         }
-        
         return true
     }
     
@@ -99,11 +79,6 @@ class ItemDetailTableViewController: UITableViewController {
             let description = itemDescriptionTextField.text ?? ""
             
             item = Item(title: name, description: description)
-            
         }
-        
     }
-    
-    
 }
-

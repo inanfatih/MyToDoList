@@ -13,13 +13,11 @@ class ItemTableViewCell: UITableViewCell {
     var onClick: ( (ItemTableViewCell) -> () )?
     
     @IBOutlet weak var itemNameLabel: UILabel!
-    @IBOutlet weak var checkBoxButton: UIButton!
-    
-    @IBAction func buttonTapped(_ sender: UIButton) {
-        
+    @IBOutlet weak var toSwitch: UISwitch!
+    @IBAction func doneSwitch(_ sender: UISwitch) {
         onClick?(self)
-        
     }
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()

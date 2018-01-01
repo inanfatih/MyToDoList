@@ -116,28 +116,24 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Item" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ol6-wR-kYv">
-                                            <rect key="frame" x="46" y="11" width="296" height="21"/>
+                                            <rect key="frame" x="54" y="11" width="262" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fqw-k1-g0b">
-                                            <rect key="frame" x="0.0" y="0.0" width="46" height="43"/>
+                                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="x0h-DM-S03">
+                                            <rect key="frame" x="289" y="6" width="49" height="31"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <connections>
-                                                <action selector="buttonTapped:" destination="gDr-nN-ctL" eventType="touchUpInside" id="LfX-mQ-HQO"/>
+                                                <action selector="doneSwitch:" destination="gDr-nN-ctL" eventType="valueChanged" id="4aE-2f-4e3"/>
                                             </connections>
-                                        </button>
-                                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="x0h-DM-S03">
-                                            <rect key="frame" x="268" y="6" width="49" height="31"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         </switch>
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="checkBoxButton" destination="fqw-k1-g0b" id="Ink-sO-83O"/>
                                     <outlet property="itemNameLabel" destination="ol6-wR-kYv" id="Mb8-mc-nav"/>
+                                    <outlet property="toSwitch" destination="x0h-DM-S03" id="dyz-1i-j4P"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>

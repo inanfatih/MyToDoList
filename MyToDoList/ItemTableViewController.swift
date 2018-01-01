@@ -6,23 +6,19 @@
 //  Copyright © 2017 Fatih inan. All rights reserved.
 //
 
-
 import UIKit
 
 class ItemTableViewController: UITableViewController {
     private var items = Item.getMockData()
     
-    //var selectedSegment: Int!
-    
     var segmentItems: [Item]!
-    
-    
+
+  
     override func viewDidLoad() {
         super.viewDidLoad()
         // Setting up segment Items to show
         getSegmentItems()
         self.title = "To Do List"
-        
     }
     
     func getSegmentItems() {
@@ -67,28 +63,38 @@ class ItemTableViewController: UITableViewController {
             guard let indexPath = tableView.indexPath(for: cell) else { return }
             
             let item = self.segmentItems[indexPath.row]
-            print("Row \(item.title) " )
             
             //switch status
             item.isCompleted = !item.isCompleted
+            
             tableView.reloadData()
+            
+            if item.isCompleted {
+                cell.itemNameLabel.textColor = UIColor.gray
+                cell.toSwitch.setOn(true, animated: true)
+            } else {
+                cell.toSwitch.setOn(false, animated: true)
+                cell.itemNameLabel.textColor = UIColor.black
+            }
         }
         
-        //returning correct icons and colors for each item's status
         if item.isCompleted {
             cell.itemNameLabel.textColor = UIColor.gray
+            cell.toSwitch.setOn(true, animated: true)
         } else {
+            cell.toSwitch.setOn(false, animated: true)
             cell.itemNameLabel.textColor = UIColor.black
         }
+        
         
         return cell
     }
     
+  
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let row = indexPath.row
         
-        //let items = listData.items
-        //guard let item = segmentItems[row] else { return }
         let item = segmentItems[row]
         displayItemDetails(item: item)
     }
@@ -98,31 +104,10 @@ class ItemTableViewController: UITableViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        //add if to compare segue.identifier!!!!!
-        if segue.identifier == "ToItemDetails" {
-            
-            let backItem = UIBarButtonItem()
-            backItem.title = ""
-            navigationItem.backBarButtonItem = backItem
-            
-            guard let item = sender as? Item else { return }
-            guard let itemDetailViewController = segue.destination as? ItemDetailTableViewController else { return
-            }
-            
-            itemDetailViewController.item = item
-        }
-        
-        if segue.identifier == "AddItem" {
-            
+
             let backItem = UIBarButtonItem()
             backItem.title = "Cancel"
             navigationItem.backBarButtonItem = backItem
-            
-            print("Adding new item.")
-        }
-        
-        
     }
     
     // Override to support conditional editing of the table view.
@@ -143,9 +128,6 @@ class ItemTableViewController: UITableViewController {
             getSegmentItems()
             
             tableView.reloadData()
-            //let count = segmentItems.count
-            //let newIndexPath = NSIndexPath(row: count, section: 0)
-            //tableView.deleteRows(at: [newIndexPath as IndexPath], with: .fade)
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }
@@ -180,13 +162,8 @@ class ItemTableViewController: UITableViewController {
                 getSegmentItems()
                 
                 tableView.reloadData()
-                
             }
-            
         }
-        
-        
     }
-    
 }
 

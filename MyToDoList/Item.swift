@@ -17,7 +17,6 @@ class Item {
         title = providedTitle
         description = providedDescription
     }
-    
 }
 
 extension Item
@@ -25,7 +24,7 @@ extension Item
     public class func getMockData() -> [Item]
     {
         return [
-            Item(title: "first todo", description: "todo description")
+            Item(title: "sample todo", description: "todo description")
             
         ]
     }

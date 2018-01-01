@@ -12,7 +12,6 @@ class ItemTableViewController: UITableViewController {
     private var items = Item.getMockData()
     
     var segmentItems: [Item]!
-
   
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,28 +68,17 @@ class ItemTableViewController: UITableViewController {
             
             tableView.reloadData()
             
-            if item.isCompleted {
-                cell.itemNameLabel.textColor = UIColor.gray
-                cell.toSwitch.setOn(true, animated: true)
-            } else {
-                cell.toSwitch.setOn(false, animated: true)
-                cell.itemNameLabel.textColor = UIColor.black
-            }
         }
         
         if item.isCompleted {
             cell.itemNameLabel.textColor = UIColor.gray
-            cell.toSwitch.setOn(true, animated: true)
-        } else {
             cell.toSwitch.setOn(false, animated: true)
+        } else {
+            cell.toSwitch.setOn(true, animated: true)
             cell.itemNameLabel.textColor = UIColor.black
         }
-        
-        
         return cell
     }
-    
-  
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let row = indexPath.row
@@ -141,7 +129,6 @@ class ItemTableViewController: UITableViewController {
             
             if let selectedIndexPath = tableView.indexPathForSelectedRow {
                 
-            
                 segmentItems[selectedIndexPath.row] = item
                 
                 tableView.reloadRows(at: [selectedIndexPath], with: .none)
@@ -149,7 +136,7 @@ class ItemTableViewController: UITableViewController {
             } else {
                 
                 // Add a new item.
-                
+        
                 // Go back to All segment if adding an item from the Done segment
                 
                 let count = items.count

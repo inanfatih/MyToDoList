@@ -2,8 +2,8 @@
 //  AppDelegate.swift
 //  MyToDoList
 //
-//  Created by Fatih inan on 12/30/17.
-//  Copyright © 2017 Fatih inan. All rights reserved.
+//  Created by Mehmet Fatih inan & Kamalpreet Singh on 12/31/17.
+//  Copyright © 2017 Mehmet Fatih inan  & Kamalpreet Singh. All rights reserved.
 //
 
 import UIKit

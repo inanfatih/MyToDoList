@@ -2,8 +2,8 @@
 //  ItemTableViewController.swift
 //  MyToDoList
 //
-//  Created by Fatih inan on 12/31/17.
-//  Copyright © 2017 Fatih inan. All rights reserved.
+//  Created by Mehmet Fatih inan & Kamalpreet Singh on 12/31/17.
+//  Copyright © 2017 Mehmet Fatih inan  & Kamalpreet Singh. All rights reserved.
 //
 
 import UIKit
@@ -13,6 +13,7 @@ class ItemTableViewController: UITableViewController {
     
     var segmentItems: [Item]!
   
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         getSegmentItems()
@@ -45,7 +46,7 @@ class ItemTableViewController: UITableViewController {
         return segment.count
         
     }
-    
+ 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ItemTableViewCell", for: indexPath) as! ItemTableViewCell
         
@@ -59,11 +60,9 @@ class ItemTableViewController: UITableViewController {
             
             let item = self.segmentItems[indexPath.row]
             
-            //switch status
             item.isCompleted = !item.isCompleted
             
             tableView.reloadData()
-            
         }
         
         if item.isCompleted {
@@ -75,7 +74,6 @@ class ItemTableViewController: UITableViewController {
         }
         return cell
     }
-    
     
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -94,6 +92,7 @@ class ItemTableViewController: UITableViewController {
             let backItem = UIBarButtonItem()
             backItem.title = "Cancel"
             navigationItem.backBarButtonItem = backItem
+        
     }
     
     // Override to support conditional editing of the table view.
@@ -117,8 +116,6 @@ class ItemTableViewController: UITableViewController {
         }
     }
     
-    
-    // get the item from the edit view // function sender parameter is a segue, and is used in IB in the Exit button
     @IBAction func unwindToItemTable(sender: UIStoryboardSegue) {
         
         if let sourceViewController = sender.source as? ItemDetailTableViewController, let item = sourceViewController.item {
@@ -130,10 +127,6 @@ class ItemTableViewController: UITableViewController {
                 tableView.reloadRows(at: [selectedIndexPath], with: .none)
                 
             } else {
-                
-                // Add a new item.
-        
-                // Go back to All segment if adding an item from the Done segment
                 
                 let count = items.count
                 let newIndexPath = NSIndexPath(row: count, section: 0)

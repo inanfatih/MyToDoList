@@ -2,8 +2,8 @@
 //  ItemDetailTableViewController.swift
 //  MyToDoList
 //
-//  Created by Fatih inan on 12/31/17.
-//  Copyright © 2017 Fatih inan. All rights reserved.
+//  Created by Mehmet Fatih inan & Kamalpreet Singh on 12/31/17.
+//  Copyright © 2017 Mehmet Fatih inan  & Kamalpreet Singh. All rights reserved.
 //
 
 import UIKit
@@ -47,7 +47,13 @@ class ItemDetailTableViewController: UITableViewController {
             guard let name = itemNameTextField.text else { return true }
             
             if (name.isEmpty) {
-                displayError()
+                let alertController = UIAlertController(title: "Enter Item Name", message:
+                    "You must enter an item name", preferredStyle: UIAlertControllerStyle.alert)
+                
+                alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default,handler: nil))
+                
+                self.present(alertController, animated: true, completion: nil)
+
                 return false
                 
             } else {
@@ -55,17 +61,6 @@ class ItemDetailTableViewController: UITableViewController {
             }
         }
         return true
-    }
-    
-    func displayError(){
-        
-        let alertController = UIAlertController(title: "Empty Item Name", message:
-            "Please enter a to-do before saving", preferredStyle: UIAlertControllerStyle.alert)
-        
-        alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default,handler: nil))
-        
-        self.present(alertController, animated: true, completion: nil)
-        
     }
     
     // send back to previous view // using exit and unwindToView

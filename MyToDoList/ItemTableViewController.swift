@@ -11,6 +11,7 @@ import UIKit
 class ItemTableViewController: UITableViewController {
     private var items = Item.getMockData()
     
+    @IBOutlet var tasksTableView: UITableView!
     var segmentItems: [Item]!
   
     
@@ -92,6 +93,14 @@ class ItemTableViewController: UITableViewController {
             let backItem = UIBarButtonItem()
             backItem.title = "Cancel"
             navigationItem.backBarButtonItem = backItem
+        
+        if let indexPath = tasksTableView.indexPathForSelectedRow{
+            let selectedRow = indexPath.row
+            // Set destination view controller
+            let detailVC = segue.destination as! ItemDetailTableViewController
+            
+            detailVC.item = items[selectedRow]
+        }
         
     }
     

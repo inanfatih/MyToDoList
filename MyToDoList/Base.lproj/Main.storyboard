@@ -160,35 +160,18 @@
                         <barButtonItem key="backBarButtonItem" title=" " id="FW0-05-FTe"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="f8w-yV-IAb">
                             <connections>
-                                <segue destination="5PR-EB-dmM" kind="presentation" identifier="AddItem" id="E8s-we-6bR"/>
+                                <segue destination="sHZ-JR-WXb" kind="show" id="JS6-P1-od5"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="tasksTableView" destination="xL8-gR-J3h" id="qUA-59-AOR"/>
                         <segue destination="sHZ-JR-WXb" kind="show" identifier="ToItemDetails" id="2eC-V2-Tyq"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PRy-aG-za4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3023.1999999999998" y="454.72263868065971"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="tYL-zH-jYU">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="5PR-EB-dmM" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="9Hw-S3-seQ">
-                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="sHZ-JR-WXb" kind="relationship" relationship="rootViewController" id="1b0-2C-WAb"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="7rA-Zn-tbE" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3828" y="801.94902548725645"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="6Un-v4-NNW">

@@ -83,12 +83,20 @@ class ItemDetailTableViewController: UITableViewController {
             dataSet.setValue(UUID().uuidString, forKey: "id")
             
             // Accessing UserDefaults
+            
+            //var userDefaults = UserDefaults.standard
+            //var itemList:NSMutableArray? = userDefaults.object(forKey: "itemList") as? NSMutableArray
+            
+            var itemList:NSMutableArray? = NSMutableArray()
             var userDefaults = UserDefaults.standard
-            var itemList:NSMutableArray? = userDefaults.object(forKey: "itemList") as? NSMutableArray
+            
+            if let ud = userDefaults.object(forKey: "itemList") as? NSArray {
+                itemList = ud.mutableCopy() as! NSMutableArray
+            }
             
             let tableVC = segue.destination as! ItemTableViewController
             
-            if((itemList) != nil){ // data available
+            if itemList!.count > 0 { // data available
                 
                 var newMutuableList:NSMutableArray = NSMutableArray()
                 

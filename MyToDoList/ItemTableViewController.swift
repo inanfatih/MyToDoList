@@ -9,26 +9,41 @@
 import UIKit
 
 class ItemTableViewController: UITableViewController {
-    private var items = Item.getMockData()
+    //private var items = Item.getMockData()
+    var todoItems:NSMutableArray = NSMutableArray()
     
     @IBOutlet var tasksTableView: UITableView!
-    var segmentItems: [Item]!
+    //var segmentItems: [Item]!
   
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        getSegmentItems()
+        //getSegmentItems()
         self.title = "To Do List"
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        
+        var userDefaults = UserDefaults.standard
+        
+        var itemListFromUserDefaults:NSMutableArray? = userDefaults.object(forKey: "itemList") as? NSMutableArray
+        
+        if ((itemListFromUserDefaults) != nil){
+            todoItems = itemListFromUserDefaults!
+        }
+        
+        self.tableView.reloadData()
+    }
+    /*
     func getSegmentItems() {
-        let items = self.items
+        //let items = self.items
         var allItems: [Item] = []
         for item in items {
             allItems.append(item)
         }
-            segmentItems = allItems
-    }
+        segmentItems = allItems
+ 
+    }*/
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -43,8 +58,10 @@ class ItemTableViewController: UITableViewController {
     // Number of cells
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        guard let segment = segmentItems else { return 0 }
-        return segment.count
+        //guard let segment = segmentItems else { return 0 }
+        //return segment.count
+        
+        return todoItems.count
         
     }
  
@@ -52,27 +69,56 @@ class ItemTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ItemTableViewCell", for: indexPath) as! ItemTableViewCell
         
         //load item
-        let item = segmentItems[(indexPath as NSIndexPath).row]
-        cell.itemNameLabel.text = item.title
+        var todoItem:NSDictionary = todoItems.object(at: (indexPath as NSIndexPath).row) as! NSDictionary
+        var itemName = (todoItem.object(forKey: "title") as! String)
+        cell.itemNameLabel.text = itemName
+        
+        //let item = segmentItems[(indexPath as NSIndexPath).row]
+        //cell.itemNameLabel.text = item.title
+        
+        let isCompleted = todoItem.object(forKey: "completed") as! Bool
         
         cell.onClick = { cell in
             
+            var userDefaults = UserDefaults.standard
+            var itemListFromUserDefaults:NSMutableArray? = userDefaults.object(forKey: "itemList") as? NSMutableArray
+            
+            var newMutuableList:NSMutableArray = NSMutableArray()
+            
+            for dict in itemListFromUserDefaults! {
+                var _dict = (dict as? NSMutableDictionary)?.mutableCopy() as! NSMutableDictionary
+                
+                if (_dict.value(forKey: "id") as! String == todoItem.value(forKey: "id") as! String){
+                    
+                    _dict.setValue(!isCompleted, forKey: "completed")
+                }
+                
+                newMutuableList.add(_dict)
+            }
+            
+            userDefaults.removeObject(forKey: "itemList")
+            userDefaults.set(newMutuableList, forKey: "itemList")
+            userDefaults.synchronize()
+            /*
             guard let indexPath = tableView.indexPath(for: cell) else { return }
             
             let item = self.segmentItems[indexPath.row]
             
             item.isCompleted = !item.isCompleted
+            */
+            self.todoItems = newMutuableList
             
             tableView.reloadData()
         }
         
-        if item.isCompleted {
+        if isCompleted {
             cell.itemNameLabel.textColor = UIColor.gray
             cell.toSwitch.setOn(false, animated: true)
         } else {
             cell.toSwitch.setOn(true, animated: true)
             cell.itemNameLabel.textColor = UIColor.black
         }
+        
         return cell
     }
     
@@ -80,11 +126,13 @@ class ItemTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let row = indexPath.row
         
-        let item = segmentItems[row]
-        displayItemDetails(item: item)
+        var todoItem:NSDictionary = todoItems.object(at: (indexPath as NSIndexPath).row) as! NSDictionary
+        
+        //let item = segmentItems[row]
+        displayItemDetails(item: todoItem)
     }
     
-    func displayItemDetails(item: Item) {
+    func displayItemDetails(item: NSDictionary) {
         performSegue(withIdentifier: "ToItemDetails", sender: item)
     }
     
@@ -99,7 +147,8 @@ class ItemTableViewController: UITableViewController {
             // Set destination view controller
             let detailVC = segue.destination as! ItemDetailTableViewController
             
-            detailVC.item = items[selectedRow]
+            var todoItem:NSDictionary = todoItems.object(at: (indexPath as NSIndexPath).row) as! NSDictionary
+            detailVC.item = todoItem
         }
         
     }
@@ -117,8 +166,24 @@ class ItemTableViewController: UITableViewController {
             // Delete the row from the data source
             let row = indexPath.row
             
-            items.remove(at: row)
-            getSegmentItems()
+            var userDefaults = UserDefaults.standard
+            var itemListFromUserDefaults:NSMutableArray? = userDefaults.object(forKey: "itemList") as? NSMutableArray
+            
+            var newMutuableList:NSMutableArray = NSMutableArray()
+            
+            for dict in itemListFromUserDefaults! {
+                let _dict = dict as! NSDictionary
+                
+                newMutuableList.add(_dict)
+            }
+            var todoItem:NSDictionary = todoItems.object(at: (row)) as! NSDictionary
+            newMutuableList.remove(todoItem)
+            
+            userDefaults.removeObject(forKey: "itemList")
+            userDefaults.set(newMutuableList, forKey: "itemList")
+            userDefaults.synchronize()
+            
+            todoItems = newMutuableList
             
             tableView.reloadData()
         } else if editingStyle == .insert {
@@ -126,7 +191,7 @@ class ItemTableViewController: UITableViewController {
     }
     
     @IBAction func unwindToItemTable(sender: UIStoryboardSegue) {
-        
+        /*
         if let sourceViewController = sender.source as? ItemDetailTableViewController, let item = sourceViewController.item {
             
             if let selectedIndexPath = tableView.indexPathForSelectedRow {
@@ -148,7 +213,7 @@ class ItemTableViewController: UITableViewController {
                 
                 tableView.reloadData()
             }
-        }
+        }*/
     }
 }
 

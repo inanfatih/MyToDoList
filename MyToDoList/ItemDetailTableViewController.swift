@@ -25,15 +25,15 @@ class ItemDetailTableViewController: UITableViewController {
         }
     }
     
-    var item: Item!
+    var item:NSDictionary = NSDictionary()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if let item = item {
+        if item["id"] != nil {
             self.title = "Edit Item"
-            itemNameTextField.text = item.title
-            itemDescriptionTextField.text = item.description
+            itemNameTextField.text = (item.value(forKey: "title") as! String)
+            itemDescriptionTextField.text = (item.value(forKey: "desc") as! String)
         }
     }
     
@@ -71,8 +71,67 @@ class ItemDetailTableViewController: UITableViewController {
             
             let name = itemNameTextField.text ?? ""
             let description = itemDescriptionTextField.text ?? ""
-            
+            /*
             item = Item(title: name, description: description)
+            */
+ 
+            // Creating Dictionary
+            var dataSet:NSMutableDictionary = NSMutableDictionary()
+            dataSet.setValue(name, forKey: "title")
+            dataSet.setValue(description, forKey: "desc")
+            dataSet.setValue(false, forKey: "completed")
+            dataSet.setValue(UUID().uuidString, forKey: "id")
+            
+            // Accessing UserDefaults
+            var userDefaults = UserDefaults.standard
+            var itemList:NSMutableArray? = userDefaults.object(forKey: "itemList") as? NSMutableArray
+            
+            let tableVC = segue.destination as! ItemTableViewController
+            
+            if((itemList) != nil){ // data available
+                
+                var newMutuableList:NSMutableArray = NSMutableArray()
+                
+                for dict in itemList! {
+                    
+                    if(item["id"] != nil) {
+                        
+                        var _dict = (dict as! NSDictionary).mutableCopy() as! NSMutableDictionary
+                        
+                        if (_dict.value(forKey: "id") as! String == item.value(forKey: "id") as! String) {
+                            _dict.setValue(name, forKey: "title")
+                            _dict.setValue(description, forKey: "desc")
+                        }
+                        
+                        newMutuableList.add(_dict)
+                        
+                    } else {
+                        newMutuableList.add(dict as! NSDictionary)
+                    }
+                }
+                
+                userDefaults.removeObject(forKey: "itemList")
+                
+                if(item["id"] == nil) {
+                    newMutuableList.add(dataSet)
+                }
+                
+                userDefaults.set(newMutuableList, forKey: "itemList")
+                
+                tableVC.todoItems = newMutuableList
+                
+            } else { // First Item in To do list
+                userDefaults.removeObject(forKey: "itemList")
+                
+                itemList = NSMutableArray()
+                itemList!.add(dataSet)
+                
+                userDefaults.set(itemList, forKey: "itemList")
+                
+                tableVC.todoItems = itemList!
+            }
+            
+            userDefaults.synchronize()
         }
     }
 }
